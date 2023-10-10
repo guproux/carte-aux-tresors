@@ -17,4 +17,9 @@ public class Treasure extends Element {
         return ElementType.TREASURE;
     }
 
+    @Override
+    public String toString() {
+        return this.getType();
+    }
+
 }

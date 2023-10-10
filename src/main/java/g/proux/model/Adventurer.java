@@ -21,4 +21,9 @@ public class Adventurer extends BlockingElement {
         return ElementType.ADVENTURER;
     }
 
+    @Override
+    public String toString() {
+        return this.getType() + " (" + this.name + ")";
+    }
+
 }

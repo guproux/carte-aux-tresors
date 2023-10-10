@@ -20,12 +20,15 @@ public class MapView {
             for (int j = 0; j < map.getWidth(); j++) {
                 Optional<Element> oElement = map.getElement(i, j);
 
+                String stringToPrint;
                 if (oElement.isPresent()) {
                     Element element = oElement.get();
-                    System.out.printf("%10s", element.getType());
+                    stringToPrint = element.toString();
                 } else {
-                    System.out.print(".          ");
+                    stringToPrint = ".";
                 }
+
+                System.out.printf("%-20s", stringToPrint);
             }
             System.out.println();
         }

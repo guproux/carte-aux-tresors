@@ -11,4 +11,9 @@ public class Mountain extends BlockingElement {
         return ElementType.MOUNTAIN;
     }
 
+    @Override
+    public String toString() {
+        return this.getType();
+    }
+
 }
