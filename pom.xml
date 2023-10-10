@@ -9,17 +9,16 @@
   <version>1.0-SNAPSHOT</version>
 
   <name>carte-aux-tresors</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    
+    <java.version>17</java.version>
 
     <lombok.version>1.18.22</lombok.version>
     <junit.version>4.13.1</junit.version>
     <assertj.version>3.24.2</assertj.version>
+    <slf4j.version>2.0.9</slf4j.version>
   </properties>
 
   <dependencies>
@@ -41,6 +40,12 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>${lombok.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
     </dependency>
   </dependencies>
 
@@ -88,5 +93,16 @@
         </plugin>
       </plugins>
     </pluginManagement>
+
+    <plugins>
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <configuration>
+                  <source>${java.version}</source>
+                  <target>${java.version}</target>
+              </configuration>
+          </plugin>
+      </plugins>
   </build>
 </project>

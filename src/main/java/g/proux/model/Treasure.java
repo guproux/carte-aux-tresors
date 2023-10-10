@@ -1,5 +1,6 @@
 package g.proux.model;
 
+import g.proux.enumeration.ElementType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,5 +11,10 @@ import lombok.Setter;
 public class Treasure extends Element {
 
     private Integer value;
+
+    @Override
+    public String getType() {
+        return ElementType.TREASURE;
+    }
 
 }
