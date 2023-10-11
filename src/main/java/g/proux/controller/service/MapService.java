@@ -25,16 +25,8 @@ public class MapService {
      * @param y l'ordonnée de l'élément recherché
      *
      * @return l'élément s'il existe
-     *
-     * @throws OutOfBoundsException se déclenche si les coordonnées passées en paramètre sont en dehors de la carte
      */
-    public Optional<Element> getElementByCoordinates(Map map, int x, int y) throws OutOfBoundsException {
-        if (x > map.getWidth() || y > map.getHeight()) {
-            String errorMessage = String.format("L'élément recherché (x: %d, y: %d) est en dehors de la carte.", x, y);
-            log.error(errorMessage);
-            throw new OutOfBoundsException(errorMessage, "ELEMENT_OUT_OF_BOUNDS");
-        }
-
+    public Optional<Element> getElementByCoordinates(Map map, int x, int y) {
         List<Element> elements = map.getElements().stream().filter(e -> e.getX().equals(x) && e.getY().equals(y)).toList();
         if (elements.size() == 2) { // Si deux éléments sont aux mêmes coordonnées c'est qu'un aventurier y est
             return elements.stream().filter(e -> ElementType.ADVENTURER.equals(e.getType())).findFirst();

@@ -5,14 +5,17 @@ import g.proux.controller.service.MapService;
 import g.proux.enumeration.ElementType;
 import g.proux.exception.ElementCreationException;
 import g.proux.model.Adventurer;
+import g.proux.model.Element;
 import g.proux.model.Map;
 import g.proux.view.MapView;
 import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.List;
 
@@ -56,6 +59,9 @@ public class AdventureController {
         this.printMap();
     }
 
+    /**
+     * Simule la recherche des trésors par les aventuriers.
+     */
     public void searchTreasures() {
         List<Adventurer> adventurers = this.mapService.getAdventurers(this.map);
 
@@ -64,6 +70,30 @@ public class AdventureController {
                 this.adventurerService.doAction(adventurer, this.map);
             }
             this.printMap();
+        }
+    }
+
+    /**
+     * Ecrit la carte dans un fichier de sortie.
+     *
+     * @param outputFileName le nom du fichier de sortie
+     *
+     * @throws IOException se déclenche si le fichier n'est pas disponible en écriture
+     */
+    public void writeMapIntoFile(String outputFileName) throws IOException {
+        String lineSeparator = System.lineSeparator();
+        Path path = Paths.get(outputFileName);
+
+        Files.deleteIfExists(path);
+
+        StringBuilder sb = new StringBuilder(this.map.writeLine());
+        sb.append(lineSeparator);
+        Files.write(path, sb.toString().getBytes(StandardCharsets.UTF_8), StandardOpenOption.CREATE);
+
+        for (Element element : this.map.getElements()) {
+            sb = new StringBuilder(element.writeLine());
+            sb.append(lineSeparator);
+            Files.write(path, sb.toString().getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);
         }
     }
 

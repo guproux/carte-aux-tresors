@@ -18,6 +18,11 @@ public class Treasure extends Element {
     }
 
     @Override
+    public String writeLine() {
+        return getType() + " - " + this.getX() + " - " + this.getY() + " - " + this.getValue();
+    }
+
+    @Override
     public String toString() {
         return this.getType() + " (" + this.value + ")";
     }

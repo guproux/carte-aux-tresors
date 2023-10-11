@@ -20,16 +20,20 @@ public class App
         MapView view = new MapView(mapService);
         AdventureController controller = new AdventureController(view, mapService, adventurerService);
 
-        String fileName = "src/main/resources/input/adventure.txt";
+        String inputFileName = "src/main/resources/input/adventure.txt";
+        String outputFileName = "src/main/resources/output/adventure.txt";
 
         try {
             // Première étape lire le fichier pour créer la carte et ses éléments
-            controller.readFileAndCreateMap(fileName);
+            controller.readFileAndCreateMap(inputFileName);
 
             // Deuxième étape la recherche des trésors par les aventuriers
             controller.searchTreasures();
+
+            // Troisième étape enregistrement de la simulation dans un fichier
+            controller.writeMapIntoFile(outputFileName);
         } catch (IOException ex) {
-            log.error("Erreur pendant la simulation, le fichier d'entrée n'est pas lisible. {}", ex.getMessage());
+            log.error("Erreur pendant la simulation, un des fichiers n'est pas disponible en lecture ou en écriture. {}", ex.getMessage());
         } catch (ElementCreationException ex) {
             log.error("Erreur pendant la simulation, un élément n'a pas pu être créé. {}", ex.getMessage());
         }

@@ -26,12 +26,7 @@ public class MapView {
             StringBuilder sb = new StringBuilder();
 
             for (int j = 0; j < map.getWidth(); j++) {
-                Optional<Element> oElement;
-                try {
-                    oElement = this.mapService.getElementByCoordinates(map, j, i);
-                } catch (OutOfBoundsException e) {
-                    oElement = Optional.empty();
-                }
+                Optional<Element> oElement = this.mapService.getElementByCoordinates(map, j, i);
 
                 String stringToPrint;
                 if (oElement.isPresent()) {

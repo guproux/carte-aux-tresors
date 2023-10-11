@@ -12,6 +12,11 @@ public class Mountain extends BlockingElement {
     }
 
     @Override
+    public String writeLine() {
+        return getType() + " - " + this.getX() + " - " + this.getY();
+    }
+
+    @Override
     public String toString() {
         return this.getType();
     }

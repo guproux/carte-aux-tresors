@@ -23,6 +23,11 @@ public class Adventurer extends BlockingElement {
     }
 
     @Override
+    public String writeLine() {
+        return getType() + " - " + this.getName() + " - " + this.getX() + " - " + this.getY() + " - " + this.getOrientation() + " - " + this.getLoot();
+    }
+
+    @Override
     public String toString() {
         return this.getType() + " (" + this.name + ")";
     }

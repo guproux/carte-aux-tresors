@@ -109,15 +109,13 @@ public class AdventurerService {
             case Orientation.WEST -> newX--;
         }
 
-        Optional<Element> oElement;
-        try {
-            oElement = this.mapService.getElementByCoordinates(map, newX, newY);
-        } catch (OutOfBoundsException e) {
-            String errorMessage = String.format("%s sort de la carte.", adventurer.getName());
+        if (newX < 0 || newY < 0 || newX > map.getWidth() || newY > map.getHeight()) {
+            String errorMessage = String.format("%s sort de la carte si il avance.", adventurer.getName());
             log.error(errorMessage);
             throw new NotAllowedActionException(errorMessage, "ADVENTURER_OUT_OF_BOUNDS");
         }
 
+        Optional<Element> oElement = this.mapService.getElementByCoordinates(map, newX, newY);
         if (oElement.isPresent()) {
             this.checkDestinationElement(oElement.get(), adventurer);
         }
