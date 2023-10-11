@@ -3,7 +3,6 @@ package g.proux.controller.service;
 import g.proux.enumeration.Action;
 import g.proux.enumeration.Orientation;
 import g.proux.exception.NotAllowedActionException;
-import g.proux.exception.OutOfBoundsException;
 import g.proux.model.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +19,7 @@ public class AdventurerService {
      * Fait faire à un aventurier une action.
      *
      * @param adventurer l'aventurier qui fait l'action
-     * @param map la carte sur laquelle l'aventurier fait l'action
+     * @param map        la carte sur laquelle l'aventurier fait l'action
      */
     public void doAction(Adventurer adventurer, Map map) {
         Optional<String> oAction = adventurer.getActions().stream().findFirst();
@@ -47,7 +46,6 @@ public class AdventurerService {
      * Tourne un aventurier vers la gauche.
      *
      * @param adventurer l'aventurier que l'on tourne
-     *
      * @throws NotAllowedActionException se déclenche si l'orientation n'est pas connu
      */
     public void turnLeft(Adventurer adventurer) throws NotAllowedActionException {
@@ -71,7 +69,6 @@ public class AdventurerService {
      * Tourne un aventurier vers la droite.
      *
      * @param adventurer l'aventurier que l'on tourne
-     *
      * @throws NotAllowedActionException se déclenche si l'orientation n'est pas connu
      */
     public void turnRight(Adventurer adventurer) throws NotAllowedActionException {
@@ -95,8 +92,7 @@ public class AdventurerService {
      * Déplace un aventurier en fonction de son orientation.
      *
      * @param adventurer l'aventurier qui se déplace
-     * @param map la carte sur laquelle l'aventurier se déplace
-     *
+     * @param map        la carte sur laquelle l'aventurier se déplace
      * @throws NotAllowedActionException se déclenche si l'aventurier ne peut pas se déplacer
      */
     public void move(Adventurer adventurer, Map map) throws NotAllowedActionException {
@@ -128,9 +124,8 @@ public class AdventurerService {
     /**
      * Vérifie si l'élément de destination a une incidence sur le déplacement.
      *
-     * @param element l'élément de destination
+     * @param element    l'élément de destination
      * @param adventurer l'aventurier qui se déplace
-     *
      * @throws NotAllowedActionException se déclenche si l'élément de destination est bloquant
      */
     private void checkDestinationElement(Element element, Adventurer adventurer) throws NotAllowedActionException {

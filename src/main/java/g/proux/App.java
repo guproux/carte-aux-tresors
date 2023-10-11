@@ -10,10 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 
 @Slf4j
-public class App
-{
+public class App {
 
-    public static void main( String[] args ) {
+    public static void main(String[] args) {
         MapService mapService = new MapService();
         AdventurerService adventurerService = new AdventurerService(mapService);
 

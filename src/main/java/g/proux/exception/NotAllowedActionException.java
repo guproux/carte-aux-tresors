@@ -1,8 +1,11 @@
 package g.proux.exception;
 
+import lombok.Getter;
+
+@Getter
 public class NotAllowedActionException extends Exception {
 
-    private String code;
+    private final String code;
 
     public NotAllowedActionException(String message, String code) {
         super(message);

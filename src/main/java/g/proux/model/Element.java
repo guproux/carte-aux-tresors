@@ -11,6 +11,7 @@ public abstract class Element {
     private Integer y;
 
     public abstract String getType();
+
     public abstract String writeLine();
 
 }

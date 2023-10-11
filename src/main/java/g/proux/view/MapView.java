@@ -1,7 +1,6 @@
 package g.proux.view;
 
 import g.proux.controller.service.MapService;
-import g.proux.exception.OutOfBoundsException;
 import g.proux.model.Element;
 import g.proux.model.Map;
 import lombok.RequiredArgsConstructor;

@@ -33,8 +33,7 @@ public class AdventureController {
      * Lis le fichier contenant les informations de la carte et initialise la carte.
      *
      * @param fileName le nom du fichier contenant les informations de la carte
-     *
-     * @throws IOException se déclenche si une erreur survient à la lecture du fichier
+     * @throws IOException              se déclenche si une erreur survient à la lecture du fichier
      * @throws ElementCreationException se déclenche si la création d'un élément échoue
      */
     public void readFileAndCreateMap(String fileName) throws IOException, ElementCreationException {
@@ -77,7 +76,6 @@ public class AdventureController {
      * Ecrit la carte dans un fichier de sortie.
      *
      * @param outputFileName le nom du fichier de sortie
-     *
      * @throws IOException se déclenche si le fichier n'est pas disponible en écriture
      */
     public void writeMapIntoFile(String outputFileName) throws IOException {

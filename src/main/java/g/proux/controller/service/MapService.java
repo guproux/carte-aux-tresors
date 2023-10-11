@@ -5,7 +5,6 @@ import g.proux.enumeration.ElementType;
 import g.proux.enumeration.Orientation;
 import g.proux.exception.ElementCreationException;
 import g.proux.exception.InvalidLineException;
-import g.proux.exception.OutOfBoundsException;
 import g.proux.model.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,9 +20,8 @@ public class MapService {
      * Récupère un élément de la carte par ses coordonnées si il y en a un.
      *
      * @param map la carte sur laquelle on recherche les éléments
-     * @param x l'abscisse de l'élément recherché
-     * @param y l'ordonnée de l'élément recherché
-     *
+     * @param x   l'abscisse de l'élément recherché
+     * @param y   l'ordonnée de l'élément recherché
      * @return l'élément s'il existe
      */
     public Optional<Element> getElementByCoordinates(Map map, int x, int y) {
@@ -38,7 +36,6 @@ public class MapService {
      * Renvoie la liste des aventuriers présent sur la carte.
      *
      * @param map la carte où nous récupérons les aventuriers
-     *
      * @return la liste des aventuriers
      */
     public List<Adventurer> getAdventurers(Map map) {
@@ -50,7 +47,6 @@ public class MapService {
      *
      * @param map          la carte à initialiser
      * @param lineElements les éléments contenant les dimensions de la carte
-     *
      * @throws ElementCreationException se déclenche si la ligne n'est pas valide
      */
     public void initMap(Map map, List<String> lineElements) throws ElementCreationException {
@@ -77,7 +73,6 @@ public class MapService {
      * @param map          la carte à laquelle la montagne sera ajoutée
      * @param lineElements les éléments avec les coordonnées de la montagne
      * @param lineIndex    l'index de la ligne des éléments
-     *
      * @throws ElementCreationException se déclenche si la ligne n'est pas valide
      */
     public void addMountain(Map map, List<String> lineElements, Integer lineIndex) throws ElementCreationException {
@@ -107,7 +102,6 @@ public class MapService {
      * @param map          la carte à laquelle le trésor sera ajouté
      * @param lineElements les éléments avec les coordonnées et la valeur du trésor
      * @param lineIndex    l'index de la ligne des éléments
-     *
      * @throws ElementCreationException se déclenche si la ligne n'est pas valide
      */
     public void addTreasure(Map map, List<String> lineElements, Integer lineIndex) throws ElementCreationException {
@@ -140,7 +134,6 @@ public class MapService {
      * @param map          la carte à laquelle l'aventurier sera ajoutée
      * @param lineElements les éléments avec les informations de l'aventurier
      * @param lineIndex    l'index de la ligne des éléments
-     *
      * @throws ElementCreationException se déclenche si la ligne n'est pas valide
      */
     public void addAdventurer(Map map, List<String> lineElements, Integer lineIndex) throws ElementCreationException {
@@ -176,13 +169,12 @@ public class MapService {
      * Vérifie la longueur d'une liste d'éléments.
      *
      * @param lineElementsToCheck la liste d'éléments à vérifier
-     * @param lengthExpected      la longueur voulue pour la liste
-     *
+     * @param expectedLength      la longueur voulue pour la liste
      * @throws InvalidLineException se déclenche si la longueur de la liste ne correspond pas
      */
-    private void checkLineLength(List<String> lineElementsToCheck, Integer lengthExpected) throws InvalidLineException {
-        if (lineElementsToCheck.size() != lengthExpected) {
-            String errorMessage = String.format("La ligne n'est pas valide car elle ne contient pas %d éléments.", lengthExpected);
+    private void checkLineLength(List<String> lineElementsToCheck, Integer expectedLength) throws InvalidLineException {
+        if (lineElementsToCheck.size() != expectedLength) {
+            String errorMessage = String.format("La ligne n'est pas valide car elle ne contient pas %d éléments.", expectedLength);
             log.error(errorMessage);
             throw new InvalidLineException(errorMessage, "INVALID_ELEMENTS_NUMBER");
         }
@@ -193,7 +185,6 @@ public class MapService {
      *
      * @param lineElement la chaîne de caractère à vérifier
      * @return l'entier issu de la chaîne
-     *
      * @throws InvalidLineException se déclenche si la chaîne n'est pas un chiffre
      */
     private Integer checkIsDigit(String lineElement) throws InvalidLineException {
@@ -213,7 +204,6 @@ public class MapService {
      * @param map la carte avec ses dimensions
      * @param x   l'abscisse de l'élément
      * @param y   l'ordonnée de l'élément
-     *
      * @throws InvalidLineException se déclenche si l'élément est en dehors de la carte
      */
     private void checkNotOutOfBounds(Map map, Integer x, Integer y) throws InvalidLineException {
@@ -228,9 +218,7 @@ public class MapService {
      * Vérifie que l'orientation est connue.
      *
      * @param orientation l'orientation à vérifier
-     *
      * @return l'orientation validée
-     *
      * @throws InvalidLineException se déclenche si l'orientation n'est pas connue
      */
     private String checkValidOrientation(String orientation) throws InvalidLineException {
@@ -248,9 +236,7 @@ public class MapService {
      * Vérifie que la liste d'actions d'un aventurier est valide.
      *
      * @param lineElement la chaîne de caractère contenant les actions
-     *
      * @return les actions sous forme de liste
-     *
      * @throws InvalidLineException se déclenche si une action n'est pas connue
      */
     private List<String> checkValidActions(String lineElement) throws InvalidLineException {
@@ -258,7 +244,8 @@ public class MapService {
 
         for (String action : actions) {
             switch (action) {
-                case Action.TURN_LEFT, Action.TURN_RIGHT, Action.MOVE -> {}
+                case Action.TURN_LEFT, Action.TURN_RIGHT, Action.MOVE -> {
+                }
                 default -> {
                     String errorMessage = String.format("La ligne n'est pas valide car l'action %s n'est pas connue.", action);
                     log.error(errorMessage);

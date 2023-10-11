@@ -1,8 +1,11 @@
 package g.proux.exception;
 
+import lombok.Getter;
+
+@Getter
 public class ElementCreationException extends Exception {
 
-    private String code;
+    private final String code;
 
     public ElementCreationException(String message, String code) {
         super(message);
