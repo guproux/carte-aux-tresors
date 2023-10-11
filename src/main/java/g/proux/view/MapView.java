@@ -1,6 +1,7 @@
 package g.proux.view;
 
 import g.proux.controller.service.MapService;
+import g.proux.exception.OutOfBoundsException;
 import g.proux.model.Element;
 import g.proux.model.Map;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,15 @@ public class MapView {
     public void printMap(Map map) {
         log.info("Carte aux trésors : ");
         for (int i = 0; i < map.getHeight(); i++) {
+            StringBuilder sb = new StringBuilder();
+
             for (int j = 0; j < map.getWidth(); j++) {
-                Optional<Element> oElement = this.mapService.getElementByCoordinates(map, j, i);
+                Optional<Element> oElement;
+                try {
+                    oElement = this.mapService.getElementByCoordinates(map, j, i);
+                } catch (OutOfBoundsException e) {
+                    oElement = Optional.empty();
+                }
 
                 String stringToPrint;
                 if (oElement.isPresent()) {
@@ -33,10 +41,11 @@ public class MapView {
                     stringToPrint = ".";
                 }
 
-                System.out.printf("%-20s", stringToPrint);
+                sb.append(String.format("%-20s", stringToPrint));
             }
-            System.out.println();
+            log.info(sb.toString());
         }
+        log.info("");
     }
 
 }

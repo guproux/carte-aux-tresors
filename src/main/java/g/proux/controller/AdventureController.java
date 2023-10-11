@@ -26,6 +26,14 @@ public class AdventureController {
 
     private Map map;
 
+    /**
+     * Lis le fichier contenant les informations de la carte et initialise la carte.
+     *
+     * @param fileName le nom du fichier contenant les informations de la carte
+     *
+     * @throws IOException se déclenche si une erreur survient à la lecture du fichier
+     * @throws ElementCreationException se déclenche si la création d'un élément échoue
+     */
     public void readFileAndCreateMap(String fileName) throws IOException, ElementCreationException {
         this.map = new Map();
         Path path = Paths.get(fileName);
@@ -53,8 +61,9 @@ public class AdventureController {
 
         while (adventurers.stream().anyMatch(a -> !a.getActions().isEmpty())) {
             for (Adventurer adventurer : adventurers) {
-                this.adventurerService.doAction(adventurer);
+                this.adventurerService.doAction(adventurer, this.map);
             }
+            this.printMap();
         }
     }
 

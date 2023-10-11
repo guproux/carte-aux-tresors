@@ -5,19 +5,14 @@ import g.proux.enumeration.ElementType;
 import g.proux.enumeration.Orientation;
 import g.proux.exception.ElementCreationException;
 import g.proux.exception.InvalidLineException;
+import g.proux.exception.OutOfBoundsException;
 import g.proux.model.*;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 @Slf4j
 public class MapService {
@@ -30,9 +25,21 @@ public class MapService {
      * @param y l'ordonnée de l'élément recherché
      *
      * @return l'élément s'il existe
+     *
+     * @throws OutOfBoundsException se déclenche si les coordonnées passées en paramètre sont en dehors de la carte
      */
-    public Optional<Element> getElementByCoordinates(Map map, int x, int y) {
-        return map.getElements().stream().filter(e -> e.getX().equals(x) && e.getY().equals(y)).findFirst();
+    public Optional<Element> getElementByCoordinates(Map map, int x, int y) throws OutOfBoundsException {
+        if (x > map.getWidth() || y > map.getHeight()) {
+            String errorMessage = String.format("L'élément recherché (x: %d, y: %d) est en dehors de la carte.", x, y);
+            log.error(errorMessage);
+            throw new OutOfBoundsException(errorMessage, "ELEMENT_OUT_OF_BOUNDS");
+        }
+
+        List<Element> elements = map.getElements().stream().filter(e -> e.getX().equals(x) && e.getY().equals(y)).toList();
+        if (elements.size() == 2) { // Si deux éléments sont aux mêmes coordonnées c'est qu'un aventurier y est
+            return elements.stream().filter(e -> ElementType.ADVENTURER.equals(e.getType())).findFirst();
+        }
+        return elements.stream().findFirst();
     }
 
     /**
@@ -51,6 +58,7 @@ public class MapService {
      *
      * @param map          la carte à initialiser
      * @param lineElements les éléments contenant les dimensions de la carte
+     *
      * @throws ElementCreationException se déclenche si la ligne n'est pas valide
      */
     public void initMap(Map map, List<String> lineElements) throws ElementCreationException {
@@ -77,6 +85,7 @@ public class MapService {
      * @param map          la carte à laquelle la montagne sera ajoutée
      * @param lineElements les éléments avec les coordonnées de la montagne
      * @param lineIndex    l'index de la ligne des éléments
+     *
      * @throws ElementCreationException se déclenche si la ligne n'est pas valide
      */
     public void addMountain(Map map, List<String> lineElements, Integer lineIndex) throws ElementCreationException {
@@ -106,6 +115,7 @@ public class MapService {
      * @param map          la carte à laquelle le trésor sera ajouté
      * @param lineElements les éléments avec les coordonnées et la valeur du trésor
      * @param lineIndex    l'index de la ligne des éléments
+     *
      * @throws ElementCreationException se déclenche si la ligne n'est pas valide
      */
     public void addTreasure(Map map, List<String> lineElements, Integer lineIndex) throws ElementCreationException {
@@ -138,6 +148,7 @@ public class MapService {
      * @param map          la carte à laquelle l'aventurier sera ajoutée
      * @param lineElements les éléments avec les informations de l'aventurier
      * @param lineIndex    l'index de la ligne des éléments
+     *
      * @throws ElementCreationException se déclenche si la ligne n'est pas valide
      */
     public void addAdventurer(Map map, List<String> lineElements, Integer lineIndex) throws ElementCreationException {
@@ -165,6 +176,7 @@ public class MapService {
         adventurer.setY(y);
         adventurer.setOrientation(orientation);
         adventurer.setActions(actions);
+        adventurer.setLoot(0);
         map.getElements().add(adventurer);
     }
 
@@ -173,6 +185,7 @@ public class MapService {
      *
      * @param lineElementsToCheck la liste d'éléments à vérifier
      * @param lengthExpected      la longueur voulue pour la liste
+     *
      * @throws InvalidLineException se déclenche si la longueur de la liste ne correspond pas
      */
     private void checkLineLength(List<String> lineElementsToCheck, Integer lengthExpected) throws InvalidLineException {
@@ -188,6 +201,7 @@ public class MapService {
      *
      * @param lineElement la chaîne de caractère à vérifier
      * @return l'entier issu de la chaîne
+     *
      * @throws InvalidLineException se déclenche si la chaîne n'est pas un chiffre
      */
     private Integer checkIsDigit(String lineElement) throws InvalidLineException {
@@ -207,6 +221,7 @@ public class MapService {
      * @param map la carte avec ses dimensions
      * @param x   l'abscisse de l'élément
      * @param y   l'ordonnée de l'élément
+     *
      * @throws InvalidLineException se déclenche si l'élément est en dehors de la carte
      */
     private void checkNotOutOfBounds(Map map, Integer x, Integer y) throws InvalidLineException {
@@ -221,7 +236,9 @@ public class MapService {
      * Vérifie que l'orientation est connue.
      *
      * @param orientation l'orientation à vérifier
+     *
      * @return l'orientation validée
+     *
      * @throws InvalidLineException se déclenche si l'orientation n'est pas connue
      */
     private String checkValidOrientation(String orientation) throws InvalidLineException {
