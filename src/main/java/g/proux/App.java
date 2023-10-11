@@ -14,14 +14,18 @@ public class App
 {
 
     public static void main( String[] args ) throws IOException, ElementCreationException {
-        MapView view = new MapView();
         MapService mapService = new MapService();
 
+        MapView view = new MapView(mapService);
         AdventureController controller = new AdventureController(view, mapService);
 
         String fileName = "src/main/resources/input/adventure.txt";
 
-        Map map = controller.readFileAndCreateMap(fileName);
+        // Première étape lire le fichier pour créer la carte et ses éléments
+        controller.readFileAndCreateMap(fileName);
+
+        // Deuxième étape la recherche des trésors par les aventuriers
+        controller.searchTreasures();
     }
 
 }

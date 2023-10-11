@@ -15,6 +15,7 @@ public class Adventurer extends BlockingElement {
     private String name;
     private String orientation;
     private List<String> actions;
+    private Integer loot;
 
     @Override
     public String getType() {

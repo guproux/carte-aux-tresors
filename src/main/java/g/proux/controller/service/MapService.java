@@ -15,11 +15,36 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 @Slf4j
 public class MapService {
+
+    /**
+     * Récupère un élément de la carte par ses coordonnées si il y en a un.
+     *
+     * @param map la carte sur laquelle on recherche les éléments
+     * @param x l'abscisse de l'élément recherché
+     * @param y l'ordonnée de l'élément recherché
+     *
+     * @return l'élément s'il existe
+     */
+    public Optional<Element> getElementByCoordinates(Map map, int x, int y) {
+        return map.getElements().stream().filter(e -> e.getX().equals(x) && e.getY().equals(y)).findFirst();
+    }
+
+    /**
+     * Renvoie la liste des aventuriers présent sur la carte.
+     *
+     * @param map la carte où nous récupérons les aventuriers
+     *
+     * @return la liste des aventuriers
+     */
+    public List<Adventurer> getAdventurers(Map map) {
+        return map.getElements().stream().filter(e -> ElementType.ADVENTURER.equals(e.getType())).map(Adventurer.class::cast).toList();
+    }
 
     /**
      * Initialise la carte avec ses dimensions.

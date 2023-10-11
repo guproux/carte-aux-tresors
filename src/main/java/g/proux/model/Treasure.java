@@ -19,7 +19,7 @@ public class Treasure extends Element {
 
     @Override
     public String toString() {
-        return this.getType();
+        return this.getType() + " (" + this.value + ")";
     }
 
 }

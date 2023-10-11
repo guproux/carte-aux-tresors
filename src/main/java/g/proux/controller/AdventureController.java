@@ -1,8 +1,10 @@
 package g.proux.controller;
 
+import g.proux.controller.service.AdventurerService;
 import g.proux.controller.service.MapService;
 import g.proux.enumeration.ElementType;
 import g.proux.exception.ElementCreationException;
+import g.proux.model.Adventurer;
 import g.proux.model.Map;
 import g.proux.view.MapView;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +22,11 @@ public class AdventureController {
     private final MapView view;
 
     private final MapService mapService;
+    private final AdventurerService adventurerService;
 
     private Map map;
 
-    public Map readFileAndCreateMap(String fileName) throws IOException, ElementCreationException {
+    public void readFileAndCreateMap(String fileName) throws IOException, ElementCreationException {
         this.map = new Map();
         Path path = Paths.get(fileName);
 
@@ -43,11 +46,20 @@ public class AdventureController {
         }
 
         this.printMap();
+    }
 
-        return map;
+    public void searchTreasures() {
+        List<Adventurer> adventurers = this.mapService.getAdventurers(this.map);
+
+        while (adventurers.stream().anyMatch(a -> !a.getActions().isEmpty())) {
+            for (Adventurer adventurer : adventurers) {
+                this.adventurerService.doAction(adventurer);
+            }
+        }
     }
 
     private void printMap() {
-        this.view.printMap(map);
+        this.view.printMap(this.map);
     }
+
 }
