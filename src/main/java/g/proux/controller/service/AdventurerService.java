@@ -31,6 +31,11 @@ public class AdventurerService {
                     case Action.TURN_LEFT -> this.turnLeft(adventurer);
                     case Action.TURN_RIGHT -> this.turnRight(adventurer);
                     case Action.MOVE -> this.move(adventurer, map);
+                    default -> {
+                        String errorMessage = String.format("L'action %s n'est pas connue.", action);
+                        log.error(errorMessage);
+                        throw new NotAllowedActionException(errorMessage, "UNKNOWED_ACTION");
+                    }
                 }
             } catch (NotAllowedActionException ex) {
                 log.info("{} ne fait rien ce tour.", adventurer.getName());
@@ -48,7 +53,7 @@ public class AdventurerService {
      * @param adventurer l'aventurier que l'on tourne
      * @throws NotAllowedActionException se déclenche si l'orientation n'est pas connu
      */
-    public void turnLeft(Adventurer adventurer) throws NotAllowedActionException {
+    private void turnLeft(Adventurer adventurer) throws NotAllowedActionException {
         String newOrientation = switch (adventurer.getOrientation()) {
             case Orientation.NORTH -> Orientation.WEST;
             case Orientation.EAST -> Orientation.NORTH;
@@ -71,7 +76,7 @@ public class AdventurerService {
      * @param adventurer l'aventurier que l'on tourne
      * @throws NotAllowedActionException se déclenche si l'orientation n'est pas connu
      */
-    public void turnRight(Adventurer adventurer) throws NotAllowedActionException {
+    private void turnRight(Adventurer adventurer) throws NotAllowedActionException {
         String newOrientation = switch (adventurer.getOrientation()) {
             case Orientation.NORTH -> Orientation.EAST;
             case Orientation.EAST -> Orientation.SOUTH;
@@ -95,7 +100,7 @@ public class AdventurerService {
      * @param map        la carte sur laquelle l'aventurier se déplace
      * @throws NotAllowedActionException se déclenche si l'aventurier ne peut pas se déplacer
      */
-    public void move(Adventurer adventurer, Map map) throws NotAllowedActionException {
+    private void move(Adventurer adventurer, Map map) throws NotAllowedActionException {
         Integer newX = adventurer.getX();
         Integer newY = adventurer.getY();
         switch (adventurer.getOrientation()) {
@@ -103,6 +108,11 @@ public class AdventurerService {
             case Orientation.EAST -> newX++;
             case Orientation.SOUTH -> newY++;
             case Orientation.WEST -> newX--;
+            default -> {
+                String errorMessage = String.format("L'orientation %s n'est pas connue.", adventurer.getOrientation());
+                log.error(errorMessage);
+                throw new NotAllowedActionException(errorMessage, "UNKNOWED_ORIENTATION");
+            }
         }
 
         if (newX < 0 || newY < 0 || newX > map.getWidth() || newY > map.getHeight()) {

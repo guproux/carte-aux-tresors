@@ -1,6 +1,7 @@
 package g.proux;
 
 import g.proux.controller.service.MapService;
+import g.proux.enumeration.Action;
 import g.proux.enumeration.ElementType;
 import g.proux.enumeration.Orientation;
 import g.proux.exception.ElementCreationException;
@@ -178,9 +179,9 @@ public class MapServiceTest {
         assertThat(adventurer.getActions()).hasSize(3);
 
         List<String> expectedActions = new ArrayList<>();
-        expectedActions.add("A");
-        expectedActions.add("A");
-        expectedActions.add("A");
+        expectedActions.add(Action.MOVE);
+        expectedActions.add(Action.MOVE);
+        expectedActions.add(Action.MOVE);
         assertThat(adventurer.getActions()).usingRecursiveComparison().isEqualTo(expectedActions);
     }
 

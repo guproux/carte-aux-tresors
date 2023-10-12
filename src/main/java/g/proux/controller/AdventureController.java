@@ -4,14 +4,15 @@ import g.proux.controller.service.AdventurerService;
 import g.proux.controller.service.MapService;
 import g.proux.enumeration.ElementType;
 import g.proux.exception.ElementCreationException;
+import g.proux.exception.NotAllowedActionException;
 import g.proux.model.Adventurer;
 import g.proux.model.Element;
 import g.proux.model.Map;
 import g.proux.view.MapView;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,6 +20,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 public class AdventureController {
 
@@ -50,6 +52,12 @@ public class AdventureController {
                 case ElementType.MOUNTAIN -> this.mapService.addMountain(this.map, lineElements, lineIndex);
                 case ElementType.TREASURE -> this.mapService.addTreasure(this.map, lineElements, lineIndex);
                 case ElementType.ADVENTURER -> this.mapService.addAdventurer(this.map, lineElements, lineIndex);
+                default -> {
+                    String errorMessage = String.format("Le type d'élément %s n'est pas connu.", lineElements.get(0));
+                    log.error(errorMessage);
+                    throw new ElementCreationException(errorMessage, "UNKNOWED_ELEMENT_TYPE");
+
+                }
             }
 
             lineIndex++;
