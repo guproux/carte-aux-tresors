@@ -4,7 +4,6 @@ import g.proux.controller.service.AdventurerService;
 import g.proux.controller.service.MapService;
 import g.proux.enumeration.ElementType;
 import g.proux.exception.ElementCreationException;
-import g.proux.exception.NotAllowedActionException;
 import g.proux.model.Adventurer;
 import g.proux.model.Element;
 import g.proux.model.Map;

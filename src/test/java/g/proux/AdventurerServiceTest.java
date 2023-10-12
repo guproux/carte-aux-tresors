@@ -8,11 +8,8 @@ import g.proux.model.Adventurer;
 import g.proux.model.Map;
 import g.proux.model.Mountain;
 import g.proux.model.Treasure;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.List;
