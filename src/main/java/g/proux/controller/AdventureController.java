@@ -86,12 +86,12 @@ public class AdventureController {
 
         StringBuilder sb = new StringBuilder(this.map.writeLine());
         sb.append(lineSeparator);
-        Files.write(path, sb.toString().getBytes(StandardCharsets.UTF_8), StandardOpenOption.CREATE);
+        Files.writeString(path, sb.toString(), StandardOpenOption.CREATE);
 
         for (Element element : this.map.getElements()) {
             sb = new StringBuilder(element.writeLine());
             sb.append(lineSeparator);
-            Files.write(path, sb.toString().getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);
+            Files.writeString(path, sb.toString(), StandardOpenOption.APPEND);
         }
     }
 

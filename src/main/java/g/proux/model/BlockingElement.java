@@ -1,4 +1,4 @@
 package g.proux.model;
 
-public abstract class BlockingElement extends Element {
+public abstract sealed class BlockingElement extends Element permits Mountain, Adventurer {
 }

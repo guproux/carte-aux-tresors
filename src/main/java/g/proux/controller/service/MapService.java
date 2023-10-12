@@ -243,14 +243,10 @@ public class MapService {
         List<String> actions = Arrays.stream(lineElement.split("")).toList();
 
         for (String action : actions) {
-            switch (action) {
-                case Action.TURN_LEFT, Action.TURN_RIGHT, Action.MOVE -> {
-                }
-                default -> {
-                    String errorMessage = String.format("La ligne n'est pas valide car l'action %s n'est pas connue.", action);
-                    log.error(errorMessage);
-                    throw new InvalidLineException(errorMessage, "UNKNOWED_ORIENTATION");
-                }
+            if (!action.equals(Action.TURN_LEFT) && !action.equals(Action.TURN_RIGHT) && !action.equals(Action.MOVE)) {
+                String errorMessage = String.format("La ligne n'est pas valide car l'action %s n'est pas connue.", action);
+                log.error(errorMessage);
+                throw new InvalidLineException(errorMessage, "UNKNOWED_ORIENTATION");
             }
         }
 

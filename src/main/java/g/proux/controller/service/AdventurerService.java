@@ -133,14 +133,10 @@ public class AdventurerService {
             String errorMessage = String.format("%s ne peut pas avancer.", adventurer.getName());
             log.error(errorMessage);
             throw new NotAllowedActionException(errorMessage, "BLOCKED_ADVENTURER");
-        } else if (element instanceof Treasure) {
-            Treasure treasure = (Treasure) element;
-
+        } else if (element instanceof Treasure treasure && treasure.getValue() > 0) {
             // Collecte un bout du trésor trouvé
-            if (treasure.getValue() > 0) {
-                adventurer.setLoot(adventurer.getLoot() + 1);
-                treasure.setValue(treasure.getValue() - 1);
-            }
+            adventurer.setLoot(adventurer.getLoot() + 1);
+            treasure.setValue(treasure.getValue() - 1);
         }
     }
 

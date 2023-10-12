@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Treasure extends Element {
+public final class Treasure extends Element {
 
     private Integer value;
 

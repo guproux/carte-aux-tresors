@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Adventurer extends BlockingElement {
+public final class Adventurer extends BlockingElement {
 
     private String name;
     private String orientation;

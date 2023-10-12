@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class Element {
+public abstract sealed class Element permits Treasure, BlockingElement{
 
     private Integer x;
     private Integer y;
