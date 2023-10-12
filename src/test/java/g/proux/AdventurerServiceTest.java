@@ -34,8 +34,12 @@ public class AdventurerServiceTest {
     }
 
     @Test
-    public void testNominalDoActions() {
+    public void testDoActions() {
         List<String> actions = new ArrayList<>();
+        actions.add(Action.MOVE);
+        actions.add(Action.TURN_LEFT);
+        actions.add(Action.MOVE);
+        actions.add(Action.TURN_LEFT);
         actions.add(Action.MOVE);
         actions.add(Action.MOVE);
         actions.add(Action.TURN_RIGHT);
@@ -49,7 +53,7 @@ public class AdventurerServiceTest {
         adventurer.setName("Test");
         adventurer.setX(0);
         adventurer.setY(0);
-        adventurer.setOrientation(Orientation.EAST);
+        adventurer.setOrientation(Orientation.WEST);
         adventurer.setActions(actions);
         adventurer.setLoot(0);
 
@@ -69,19 +73,18 @@ public class AdventurerServiceTest {
         map.getElements().add(mountain);
         map.getElements().add(treasure);
 
-
+        when(this.mapService.getElementByCoordinates(map, 0, 1)).thenReturn(Optional.of(mountain));
         when(this.mapService.getElementByCoordinates(map, 1, 0)).thenReturn(Optional.empty());
         when(this.mapService.getElementByCoordinates(map, 2, 0)).thenReturn(Optional.empty());
         when(this.mapService.getElementByCoordinates(map, 2, 1)).thenReturn(Optional.of(treasure));
         when(this.mapService.getElementByCoordinates(map, 2, 2)).thenReturn(Optional.empty());
 
-        for (String action : actions) {
-            this.adventurerService.doAction(adventurer, map);
-        }
+        actions.forEach(a -> this.adventurerService.doAction(adventurer, map));
 
         assertThat(adventurer.getX()).isEqualTo(treasure.getX());
         assertThat(adventurer.getY()).isEqualTo(treasure.getY());
         assertThat(adventurer.getLoot()).isEqualTo(2);
+        assertThat(adventurer.getActions().size()).isZero();
 
         assertThat(treasure.getValue()).isZero();
 

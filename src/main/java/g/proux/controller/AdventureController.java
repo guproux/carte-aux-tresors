@@ -52,12 +52,6 @@ public class AdventureController {
                 case ElementType.MOUNTAIN -> this.mapService.addMountain(this.map, lineElements, lineIndex);
                 case ElementType.TREASURE -> this.mapService.addTreasure(this.map, lineElements, lineIndex);
                 case ElementType.ADVENTURER -> this.mapService.addAdventurer(this.map, lineElements, lineIndex);
-                default -> {
-                    String errorMessage = String.format("Le type d'élément %s n'est pas connu.", lineElements.get(0));
-                    log.error(errorMessage);
-                    throw new ElementCreationException(errorMessage, "UNKNOWED_ELEMENT_TYPE");
-
-                }
             }
 
             lineIndex++;
